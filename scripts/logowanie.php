@@ -1,17 +1,13 @@
 <?php
 include "baza.php";
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT id, password, role FROM users WHERE username = ?");
+    $stmt = $conn->prepare("SELECT user_id, password, role FROM users WHERE username = ?");
     $stmt->bind_param("s", $username);
-    $stmt->execute();
+    $stmt->execute() ;
     $stmt->bind_result($id, $hashedPassword, $role);
 
     if ($stmt->fetch() && password_verify($password, $hashedPassword)) {
@@ -31,7 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 ?>
 
 <form method="POST">
-    Nazwa użytkownika: <input type="text" name="username" required><br>
-    Hasło: <input type="password" name="password" required><br>
+    <label for="username">Nazwa użytkownika:</label>
+    <input type="text" name="username" required> <br>
+
+    <label for="username">Hasło:</label>
+    <input type="password" name="password" required><br>
     <input type="submit" value="Zaloguj">
 </form>
