@@ -3,24 +3,25 @@ session_start();
 require_once "baza.php";
 require_once "pasek_nawigacyjny.php";
 
-// Dodanie nowego wpisu do apteczki
+// Obsługa dodania nowego wpisu
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['dodaj'])) {
     $opakowanie_id = $_POST['opakowanie_id'];
     $ilosc = $_POST['ilosc'];
     $cena = $_POST['cena'];
     $termin = $_POST['termin'];
 
-    $stmt = $conn->prepare("INSERT INTO apteczka (opakowanie_id, ilosc, cena, termin_waznosci) VALUES (?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO inwentarz (inwentarz_opakowanie_id, ilosc, cena, termin_waznosci) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("iids", $opakowanie_id, $ilosc, $cena, $termin);
     $stmt->execute();
 }
 
-// Rozchód
+// Obsługa rozchodu
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rozchod'])) {
     $id = $_POST['rozchod_id'];
     $rozchod = $_POST['rozchod_ilosc'];
     $typ = $_POST['typ'] ?? 'użycie';
 
+    // zmniejsz ilość
     $stmt = $conn->prepare("UPDATE apteczka SET ilosc = ilosc - ? WHERE id = ? AND ilosc >= ?");
     $stmt->bind_param("iii", $rozchod, $id, $rozchod);
     $stmt->execute();
@@ -28,15 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rozchod'])) {
     if ($stmt->affected_rows > 0) {
         echo "<p style='color:green;'>Rozchód wykonany.</p>";
 
-        // Pobierz opakowanie_id
-        $stmt_op = $conn->prepare("SELECT opakowanie_id FROM apteczki WHERE id = ?");
+        // Pobierz opakowanie_id z rekordu apteczki
+        $stmt_op = $conn->prepare("SELECT opakowanie_id FROM apteczka WHERE id = ?");
         $stmt_op->bind_param("i", $id);
         $stmt_op->execute();
         $result = $stmt_op->get_result();
         $row = $result->fetch_assoc();
         $opakowanie_id = $row['opakowanie_id'];
 
-        // Zapisz do tabeli rozchody
+        // Zapisz rozchód do tabeli rozchody
         $stmt_log = $conn->prepare("INSERT INTO rozchody (rozchody_apteczki_id, rozchody_opakowanie_id, ilosc, typ) VALUES (?, ?, ?, ?)");
         $stmt_log->bind_param("iiis", $id, $opakowanie_id, $rozchod, $typ);
         $stmt_log->execute();
@@ -45,20 +46,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rozchod'])) {
     }
 }
 
-// Lista leków do wyboru
+// Pobierz leki słownikowe do listy wyboru
 $produkty = $conn->query("
     SELECT o.opakowanie_id, p.nazwa_handlowa, o.opis 
     FROM produkty p
     JOIN opakowania o ON p.medicine_id = o.medicine_id
     ORDER BY p.nazwa_handlowa
+    LIMIT 10
 ");
 
-// Zawartość apteczki
-$apteczki = $conn->query("
-    SELECT a.id, p.nazwa_handlowa, o.opis, a.ilosc, a.cena, a.termin_waznosci
-    FROM apteczka a
-    JOIN opakowania o ON a.opakowanie_id = o.opakowanie_id
+// Pobierz zawartość apteczki
+$apteczka = $conn->query("
+    SELECT i.inwentarz_id, p.nazwa_handlowa, o.opis, i.ilosc, i.cena, i.termin_waznosci
+    FROM inwentarz i
+    JOIN opakowania o ON i.inwentarz_opakowanie_id = o.opakowanie_id
     JOIN produkty p ON o.medicine_id = p.medicine_id
+    LIMIT 10
 ");
 ?>
 
@@ -78,11 +81,12 @@ $apteczki = $conn->query("
         <input type="text" id="lek_szukaj" placeholder="Wpisz nazwę leku..." autocomplete="off">
         <input type="hidden" name="opakowanie_id" id="opakowanie_id">
         <div id="sugestie"></div>
-        <?php while ($row = $produkty->fetch_assoc()): ?>
-            <option value="<?= $row['opakowanie_id'] ?>">
-                <?= htmlspecialchars($row['nazwa_handlowa']) ?> (<?= htmlspecialchars($row['opis']) ?>)
-            </option>
-        <?php endwhile; ?>
+            <?php while ($row = $produkty->fetch_assoc()): ?>
+                <option value="<?= $row['opakowanie_id'] ?>">
+                    <?= htmlspecialchars($row['nazwa_handlowa']) ?> (<?= htmlspecialchars($row['opis']) ?>)
+                </option>
+            <?php endwhile; ?>
+        </select><br>
 
         <label>Ilość:</label>
         <input type="number" name="ilosc" min="1" required><br>
@@ -120,7 +124,7 @@ $apteczki = $conn->query("
                     <td><?= $lek['termin_waznosci'] ?></td>
                     <td>
                         <form method="post" style="display:inline;">
-                            <input type="hidden" name="rozchod_id" value="<?= $lek['id'] ?>">
+                            <input type="hidden" name="rozchod_id" value="<?= $lek['inwentarz_id'] ?>">
                             <input type="number" name="rozchod_ilosc" min="1" max="<?= $lek['ilosc'] ?>" required>
                             <select name="typ" required>
                                 <option value="użycie">użycie</option>
@@ -162,3 +166,4 @@ document.getElementById('lek_szukaj').addEventListener('input', function () {
         });
 });
 </script>
+
