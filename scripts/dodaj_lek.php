@@ -1,13 +1,26 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['dodaj'])) {
-    $opakowanie_id = $_POST['opakowanie_id'];
-    $ilosc = $_POST['ilosc'];
-    $cena = $_POST['cena'];
-    $termin = $_POST['termin'];
-    $apteczka_id = $_POST['apteczka_id']; // <-- NOWA WYMAGANA WARTOŚĆ
+require_once __DIR__ . '/../baza.php';
 
-    $stmt = $conn->prepare("INSERT INTO inwentarz (inwentarz_apteczki_id, inwentarz_opakowanie_id, ilosc, cena, termin_waznosci) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("iiids", $apteczka_id, $opakowanie_id, $ilosc, $cena, $termin);
-    $stmt->execute();
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['opakowanie_id'])) {
+    $opakowanie_id = (int) $_POST['opakowanie_id'];
+    $ilosc = (int) $_POST['ilosc'];
+    $cena = $_POST['cena'] !== "" ? (float) $_POST['cena'] : null;
+    $termin = $_POST['termin'];
+    $apteczka_id = (int) $_POST['id_apteczki'];
+
+    if (!$opakowanie_id || !$ilosc || !$termin || !$apteczka_id) {
+        die("Brak wymaganych danych.");
+    }
+
+    $stmt = $conn->prepare("INSERT INTO inwentarz (opakowanie_id, apteczka_id, ilosc, cena, termin_waznosci) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("iiids", $opakowanie_id, $apteczka_id, $ilosc, $cena, $termin);
+    if (!$stmt->execute()) {
+    die("Błąd wykonania zapytania: " . $stmt->error);
+}
+
+
+    header("Location: /apteczka/views/edytuj_apteczke.php?id=" . $apteczka_id);
+    exit();
+
 }
 ?>

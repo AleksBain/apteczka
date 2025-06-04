@@ -1,236 +1,191 @@
-/* Reset podstawowych marginesów i paddingu */
+/* Resetowanie */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* Styl całego ciała dokumentu */
+/* Tło i czcionka */
 body {
-    background-color: #f4f4f951 !important; /* Jasne tło dla przejrzystości */
-    color: #333 !important; /* Ciemna czcionka dla dobrej czytelności */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f8; /* chłodne, jasne tło */
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #1f2a38; /* ciemny, nie czarny tekst */
     line-height: 1.6;
 }
 
 /* Nagłówki */
 h1, h2, h3 {
-    color: #004080; /* Kolor ciemnoniebieski, profesjonalny */
-    margin-bottom: 10px;
+    color: #2b4c6f;
+    margin-bottom: 1rem;
+    font-weight: 600;
 }
 
 /* Linki */
 a {
-    color: #004080;
+    color: #3a7bd5;
     text-decoration: none;
+    transition: color 0.3s;
 }
 
 a:hover {
+    color: #285eae;
     text-decoration: underline;
 }
 
-/* Pasek nawigacyjny (menu górne) */
-/* Styl dla całej nawigacji */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background-color: #3e8e41; /* Kolor tła paska nawigacyjnego */
-    color: white;
-}
-
-/* Lewa część nawigacji */
-.nav-left {
-    display: flex;
-    gap: 15px;
-}
-
-/* Prawa część nawigacji */
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-/* Styl dla przycisków */
-.main-button, .logout-button {
-    display: inline-block;
+/* Przyciski */
+button, .btn {
     padding: 10px 20px;
-    background-color: #4CAF50; /* Zielony kolor */
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Typy przycisków */
+.btn-primary {
+    background-color: #3a7bd5;
     color: white;
-    text-align: center;
-    border-radius: 5px;
-    text-decoration: none; /* Usuwa podkreślenie z linków */
-    font-weight: bold;
-    transition: background-color 0.3s, transform 0.2s;
 }
 
-/* Efekt najechania myszką */
-.main-button:hover, .logout-button:hover {
-    background-color: #45a049; /* Jaśniejszy zielony na hover */
-    transform: scale(1.05); /* Powiększa przycisk na hover */
+.btn-primary:hover {
+    background-color: #285eae;
 }
 
-/* Styl dla przycisku logowania - jeśli chcesz zmienić kolor */
-.logout-button {
-    background-color: #f44336; /* Czerwony kolor dla logowania */
+.btn-warning {
+    background-color: #f0ad4e;
+    color: white;
 }
 
-.logout-button:hover {
-    background-color: #e53935; /* Jaśniejszy czerwony */
+.btn-warning:hover {
+    background-color: #ec971f;
 }
 
-/* Opcjonalnie: Styl dla daty */
-.datetime {
-    font-size: 14px;
-    color: #f1f1f1;
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
 }
 
-
-/* Główna zawartość strony */
-.content {
-    padding: 20px;
-    max-width: 1000px;
-    margin: auto;
+.btn-danger:hover {
+    background-color: #c82333;
 }
 
-/* Powiadomienia po prawej stronie */
-.notifications {
-    position: absolute;
-    top: 180px;
-    right: 30px;
-    width: 250px;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.notifications h2 {
-    color: #004080;
-    font-size: 1.1em;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.notifications ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.notifications li {
-    margin-bottom: 10px;
-    font-size: 0.95em;
-}
-
-/* Formularze logowania i rejestracji */
-form {
+/* Tabela */
+table {
     width: 100%;
-    max-width: 400px;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    margin-top: 2rem;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-form input[type="text"],
-form input[type="password"],
-form input[type="email"],
-form input[type="submit"] {
+th, td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid #eaeaea;
+}
+
+th {
+    background-color: #dbe9f6;
+    color: #2b4c6f;
+    font-weight: 600;
+}
+
+tbody tr:hover {
+    background-color: #f1f7fc;
+}
+
+/* Formularze */
+form {
+    background-color: white;
+    padding: 2rem;
+    margin: 2rem auto;
+    border-radius: 10px;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+form input, form select, form textarea {
     width: 100%;
     padding: 10px;
-    margin-top: 1px;
-    border: 1px solid #ccc;
+    margin: 10px 0 20px;
+    border: 1px solid #ccd6e0;
     border-radius: 5px;
-    font-size: 1em;
+    font-size: 1rem;
 }
 
 form input[type="submit"] {
-    background-color: #004080;
-    margin-top: 7px;
+    background-color: #3a7bd5;
     color: white;
+    border: none;
     cursor: pointer;
 }
 
 form input[type="submit"]:hover {
-    background-color: #0066cc;
+    background-color: #285eae;
 }
 
-/* Styl dla etykiet formularza (label) */
-label {
-    display: block;                  /* Każda etykieta w osobnym wierszu */
-    margin-bottom: 8px;
-    margin-top: 8px;              /* Odstęp pod etykietą */
-    font-weight: 600;                /* Pogrubienie tekstu */
-    color: #333333;                  /* Ciemny tekst (czytelny na jasnym tle) */
-    font-size: 16px;                 /* Czytelny rozmiar czcionki */
-    line-height: 1.4;                /* Trochę więcej miejsca między wierszami */
-}
-
-
-html, body {
-    height: 100%;
-    margin: 0;
-}
-
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.content {
-    flex: 1; /* Zajmuje całe dostępne miejsce, wypychając stopkę na dół */
-}
-
-.footer {
-    background-color: #f1f1f1;
-    padding: 1rem;
-}
-
-/* Styl tabeli */
-table {
-    width: 80%;
-    margin: 20px auto; /* Wyśrodkowanie tabeli */
-    border-collapse: collapse;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Cień dla tabeli */
-}
-
-th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #4CAF50;
+/* Nawigacja */
+.navbar {
+    background-color: #2b4c6f;
+    padding: 1rem 2rem;
     color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-tr:hover {
-    background-color: #f1f1f1; /* Podświetlenie wiersza */
+.navbar a {
+    color: white;
+    margin-left: 1rem;
 }
 
-button {
-    background-color: #007BFF; /* Kolor tła */
-    color: white; /* Kolor tekstu */
-    border: none; /* Bez obramowania */
-    padding: 10px 20px; /* Wewnętrzne marginesy */
-    font-size: 16px; /* Rozmiar czcionki */
-    border-radius: 5px; /* Zaokrąglone rogi */
-    cursor: pointer; /* Kursor w postaci rączki */
-    transition: background-color 0.3s ease; /* Płynna zmiana koloru */
+.navbar a:hover {
+    color: #dbe9f6;
 }
 
-button:hover {
-    background-color: #0056b3; /* Zmiana koloru tła po najechaniu */
+/* Stopka */
+.footer {
+    background-color: #2b4c6f;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
 }
 
-button:focus {
-    outline: none; /* Usuwanie obramowania po kliknięciu */
+/* Kontener główny */
+.container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Powiadomienia */
+.alert {
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.alert-info {
+    background-color: #e6f0fa;
+    color: #2b4c6f;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar a {
+        margin: 0.5rem 0;
+    }
+
+    table, th, td {
+        font-size: 0.9rem;
+    }
 }

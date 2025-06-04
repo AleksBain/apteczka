@@ -10,7 +10,7 @@ $produkty = $conn->query("
 $apteczka = $conn->query("
     SELECT i.inwentarz_id, p.nazwa_handlowa, o.opis, i.ilosc, i.cena, i.termin_waznosci
     FROM inwentarz i
-    JOIN opakowania o ON i.inwentarz_opakowanie_id = o.opakowanie_id
+    JOIN opakowania o ON i.opakowanie_id = o.opakowanie_id
     JOIN produkty p ON o.medicine_id = p.medicine_id
     LIMIT 10
 ");

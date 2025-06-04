@@ -1,6 +1,7 @@
 <?php
 session_start();
-session_unset(); // opcjonalne: usuwa wszystkie zmienne sesji
+session_unset();
 session_destroy();
-header("Location: /apteczka/index.php"); // użyj ścieżki bezwzględnej
-exit;
+header("Location: ../index.php");
+exit();
+?>

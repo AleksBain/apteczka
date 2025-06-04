@@ -10,12 +10,22 @@ session_start();
 </head>
 <body>
 <div class="wrapper">   
-    <?php include "scripts/nagl.php"; ?>
 
     <?php if (!isset($_SESSION['username'])) {
         echo "<h2>Zaloguj się lub zarejestruj</h2>";
-        include "scripts/logowanie.php";
-        include "scripts/rejestracja.php";
+
+        if (isset($_SESSION['error'])) {
+        echo '<div class="error">' . htmlspecialchars($_SESSION['error']) . '</div>';
+        unset($_SESSION['error']);
+    }
+
+    if (isset($_SESSION['success'])) {
+        echo '<div class="success">' . htmlspecialchars($_SESSION['success']) . '</div>';
+        unset($_SESSION['success']);
+    }
+    
+        include "views/formularz_logowania.php";
+        include "views/formularz_rejestracji.php";
     } else { ?>
         
         <?php include "scripts/pasek_nawigacyjny.php"; ?>
