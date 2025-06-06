@@ -25,8 +25,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $stmt = $conn->prepare("INSERT INTO users (username, password, email, role) VALUES (?, ?, ?, 'user')");
-    $stmt->execute([$username, $hashedPassword, $email]);
+
+    $familyName = $username . "'s Family";
+    $stmt = $conn->prepare("INSERT INTO rodziny (nazwa) VALUES (?)");
+    $stmt->bind_param("s", $familyName);
+    $stmt->execute();
+    $rodzina_id = $conn->insert_id;
+
+    $stmt = $conn->prepare("INSERT INTO users (username, password, email, role, rodzina_id) VALUES (?, ?, ?, 'user', ?)");
+    $stmt->bind_param("sssi", $username, $hashedPassword, $email, $rodzina_id);
+    $stmt->execute();
 
     $_SESSION['success'] = "Rejestracja zakończona pomyślnie!";
     header("Location: ../index.php");

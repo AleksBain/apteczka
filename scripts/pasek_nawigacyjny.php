@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Apteczka</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Twój styl -->
     <link rel="stylesheet" href="/apteczka/style.css">
 </head>
 <body>
@@ -23,6 +21,8 @@
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item"><a class="nav-link" href="/apteczka/apteczka.php">Moja apteczka</a></li>
       <li class="nav-item"><a class="nav-link" href="/apteczka/rodzina.php">Rodzina</a></li>
+      <li class="nav-item"><a class="nav-link" href="/apteczka/historia_lekow.php">Historia</a></li>
+      <li class="nav-item"><a class="nav-link" href="/apteczka/transakcje.php">Raporty</a></li>
 
     </ul>
 
@@ -33,7 +33,6 @@
   </div>
 </nav>
 
-<!-- Bootstrap JS (musi być na dole, przed </body>) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

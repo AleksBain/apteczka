@@ -1,26 +1,26 @@
-/* Resetowanie */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+
 }
 
-/* Tło i czcionka */
 body {
-    background-color: #f0f4f8; /* chłodne, jasne tło */
+    background-color: #f0f4f8; 
     font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #1f2a38; /* ciemny, nie czarny tekst */
+    color: #1f2a38; 
     line-height: 1.6;
 }
 
-/* Nagłówki */
+
 h1, h2, h3 {
     color: #2b4c6f;
     margin-bottom: 1rem;
     font-weight: 600;
 }
 
-/* Linki */
+
 a {
     color: #3a7bd5;
     text-decoration: none;
@@ -32,7 +32,7 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Przyciski */
+
 button, .btn {
     padding: 10px 20px;
     border: none;
@@ -42,7 +42,7 @@ button, .btn {
     transition: all 0.3s ease-in-out;
 }
 
-/* Typy przycisków */
+
 .btn-primary {
     background-color: #3a7bd5;
     color: white;
@@ -70,7 +70,7 @@ button, .btn {
     background-color: #c82333;
 }
 
-/* Tabela */
+
 table {
     width: 100%;
     margin-top: 2rem;
@@ -97,13 +97,13 @@ tbody tr:hover {
     background-color: #f1f7fc;
 }
 
-/* Formularze */
+
 form {
     background-color: white;
     padding: 2rem;
     margin: 2rem auto;
     border-radius: 10px;
-    max-width: 400px;
+   
     box-shadow: 0 4px 10px rgba(0,0,0,0.06);
 }
 
@@ -127,7 +127,7 @@ form input[type="submit"]:hover {
     background-color: #285eae;
 }
 
-/* Nawigacja */
+
 .navbar {
     background-color: #2b4c6f;
     padding: 1rem 2rem;
@@ -146,23 +146,15 @@ form input[type="submit"]:hover {
     color: #dbe9f6;
 }
 
-/* Stopka */
-.footer {
-    background-color: #2b4c6f;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    margin-top: auto;
-}
 
-/* Kontener główny */
+
 .container {
     padding: 2rem;
     max-width: 1200px;
     margin: auto;
 }
 
-/* Powiadomienia */
+
 .alert {
     padding: 1rem 1.5rem;
     border-radius: 6px;
@@ -174,7 +166,7 @@ form input[type="submit"]:hover {
     color: #2b4c6f;
 }
 
-/* Responsywność */
+
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -188,4 +180,40 @@ form input[type="submit"]:hover {
     table, th, td {
         font-size: 0.9rem;
     }
+}
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1; 
+    padding: 2rem; 
+}
+
+
+footer {
+    background-color: #2b4c6f; 
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    margin-top: auto; 
+}
+
+.action-form .hover-inputs {
+    display: none;
+    margin-bottom: 5px;
+}
+
+.action-form:hover .hover-inputs {
+    display: block;
 }

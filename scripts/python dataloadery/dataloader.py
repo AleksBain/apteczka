@@ -1,10 +1,10 @@
 import pandas as pd
 
 
-# Wczytanie danych z CSV
+
 df = pd.read_csv("/Applications/MAMP/htdocs/apteczka/scripts/Rejestr_Produktow_Leczniczych_calosciowy_stan_na_dzien_20250501.csv", sep=";", encoding="utf-8")
 
-# Wybór odpowiednich kolumn
+
 produkty = df[[
     'Identyfikator Produktu Leczniczego',
     'Nazwa Produktu Leczniczego',
@@ -22,7 +22,7 @@ produkty = df[[
     'Rodzaj preparatu'
 ]]
 
-# Zmieniamy nazwy kolumn, by pasowały do bazy danych
+
 produkty.columns = [
     'id',
     'nazwa_handlowa',
@@ -40,5 +40,5 @@ produkty.columns = [
     'rodzaj_preparatu'
 ]
 
-# Zapisz wynik w nowym CSV
+
 produkty.to_csv("produkty_zaktualizowane.csv", index=False, encoding="utf-8")

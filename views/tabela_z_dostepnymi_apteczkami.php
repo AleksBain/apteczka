@@ -40,8 +40,9 @@ $result = $stmt->get_result();
                         <td><?= htmlspecialchars($row['nazwa_apteczki']) ?></td>
                         <td><?= htmlspecialchars($row['typ']) ?></td>
                         <td>
-                            <a href="apteczka/views/edytuj_apteczke.php?id=<?= $row['id_apteczki'] ?>" class="btn btn-sm btn-warning">✏️ Edytuj</a>
-                            <a href="apteczka_usun.php?id=<?= $row['id_apteczki'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć tę apteczkę?')">🗑️ Usuń</a>
+                            <a href="/apteczka/views/edytuj_apteczke.php?id=<?= htmlspecialchars($row['id_apteczki']) ?>" class="btn btn-sm btn-warning">✏️ Edytuj</a>
+
+                            <a href="/apteczka/scripts/usun_apteczke.php?id=<?= $row['id_apteczki'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć tę apteczkę?')">🗑️ Usuń</a>
                         </td>
                     </tr>
                 <?php endwhile; ?>

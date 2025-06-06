@@ -9,7 +9,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Pobierz dane zalogowanego użytkownika
 $stmt_user = $conn->prepare("SELECT user_id, username FROM users WHERE user_id = ?");
 $stmt_user->bind_param("i", $user_id);
 $stmt_user->execute();
@@ -17,7 +16,6 @@ $user_result = $stmt_user->get_result();
 $uzytkownik = $user_result->fetch_assoc();
 $stmt_user->close();
 
-// Pobierz członków rodziny
 $stmt_rodzina = $conn->prepare("SELECT id, imie FROM czlonkowie_rodziny WHERE user_id = ?");
 $stmt_rodzina->bind_param("i", $user_id);
 $stmt_rodzina->execute();
@@ -58,12 +56,12 @@ $stmt_rodzina->close();
         <div class="form-group">
             <label for="wlasciciel_id">Właściciel apteczki:</label>
             <select name="wlasciciel_id" class="form-select" required>
-                <!-- Zalogowany użytkownik -->
+  
                 <option value="<?= htmlspecialchars($uzytkownik['user_id']) ?>">
                     <?= htmlspecialchars($uzytkownik['username']) ?> (Ty)
                 </option>
                 
-                <!-- Członkowie rodziny -->
+
                 <?php foreach ($czlonkowie_rodziny as $czlonek): ?>
                     <option value="rodzina_<?= htmlspecialchars($czlonek['id']) ?>">
                         <?= htmlspecialchars($czlonek['imie']) ?> (członek rodziny)
